@@ -1,0 +1,65 @@
+definitions:
+  message.Message:
+    properties:
+      content:
+        type: string
+      createdAt:
+        type: string
+      id:
+        type: integer
+      sent:
+        type: boolean
+      to:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /messages/sent:
+    get:
+      consumes:
+      - application/json
+      description: Returns list of sent messages
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of sent messages
+          schema:
+            items:
+              $ref: '#/definitions/message.Message'
+            type: array
+      summary: Retrive list of sent messages
+      tags:
+      - Message Processing
+  /start:
+    post:
+      consumes:
+      - application/json
+      description: No return value
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Message processing started.
+          schema:
+            type: string
+      summary: Starts Message Processings
+      tags:
+      - Message Processing
+  /stop:
+    post:
+      consumes:
+      - application/json
+      description: No return value
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Message processing stopped.
+          schema:
+            type: string
+      summary: Stops Message Processings
+      tags:
+      - Message Processing
+swagger: "2.0"

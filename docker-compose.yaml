@@ -1,0 +1,45 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:latest
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: test_user
+      POSTGRES_PASSWORD: test_password
+      POSTGRES_DB: messagemanagement
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init_postgres.sql:/docker-entrypoint-initdb.d/init_postgres.sql
+
+  app:
+    build:
+      context: .
+      dockerfile: build/Dockerfile
+    image: messagesender-api-image
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./:/go/src/messagesender
+    depends_on:
+      - db
+      - redis
+    environment:
+      DB_HOST: "host.docker.internal"
+      DB_PORT: "5432"
+      DB_USER: test_user
+      DB_PASSWORD: test_password
+      DB_NAME: messagemanagement
+      WEBHOOK_URL: https://webhook.site/f8032742-ec8a-4f31-b0ba-2643f69d3432
+    command: ["/bin/sh", "-c", "go run main.go api"]
+
+  redis:
+    image: redis:alpine
+    container_name: redis_cache
+    ports:
+      - "6379:6379"
+
+
+volumes:
+  postgres_data:
