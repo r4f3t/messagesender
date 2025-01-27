@@ -45,7 +45,7 @@ environment:
 1. Clone the repository:
    ```bash
    git clone <repository-url>
-   cd message-management-service
+   cd messagesender
    ```
 
 2. Start the application using Docker Compose:
@@ -62,8 +62,8 @@ The following endpoints are exposed:
 
 | Method | Endpoint                 | Description                     |
 |--------|--------------------------|---------------------------------|
-| POST   | `/messages/start`        | Start processing messages       |
-| POST   | `/messages/stop`         | Stop processing messages        |
+| POST   | `/start`        | Start processing messages       |
+| POST   | `/stop`         | Stop processing messages        |
 | GET    | `/messages/sent`         | Retrieve all sent messages      |
 
 ## Project Structure
